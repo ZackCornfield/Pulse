@@ -34,7 +34,6 @@ module.exports = {
                     published: true
                 },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -55,7 +54,7 @@ module.exports = {
             throw new Error("Error getting all posts");
         }
     },
-    getFeed: async (followingUserIds, joinedRealmIds, page, limit, sortField, sortOrder) => {
+    getFeed: async (followingUserIds, page, limit, sortField, sortOrder) => {
         const skip = (page - 1) * limit;
         let orderBy = {};
         if (sortField === 'comments' || sortField === 'likes') {
@@ -70,18 +69,14 @@ module.exports = {
         };
 
         try {
-            // Fetch posts from followed users or joined realms in a single query
+            // Fetch posts from followed users
             const posts = await prisma.post.findMany({
                 where: {
                     published: true,
-                    OR: [
-                        { authorId: { in: followingUserIds } },
-                        { realmId: { in: joinedRealmIds } }
-                    ]
+                    authorId: { in: followingUserIds }
                 },
                 distinct: ['id'], // Ensures no duplicate posts
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -124,7 +119,6 @@ module.exports = {
                     published: true
                 },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -166,7 +160,6 @@ module.exports = {
                     published: false
                 },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -212,7 +205,6 @@ module.exports = {
                     }
                 },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -273,7 +265,6 @@ module.exports = {
                     ],
                 },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {
@@ -294,54 +285,11 @@ module.exports = {
             throw new Error("Error getting users commented posts");
         }
     },
-    getRealmPosts: async (realmId, page, limit, sortField, sortOrder) => {
-        const skip = (page - 1) * limit;
-        let orderBy = {};
-        if (sortField === 'comments' || sortField === 'likes') {
-            orderBy = {
-                [sortField]: { _count: sortOrder }
-            };
-        } 
-        else {
-            orderBy = {
-                [sortField]: sortOrder
-            };
-        };
-
-        try {
-            const posts = await prisma.post.findMany({
-                where: { 
-                    realmId,
-                    published: true
-                },
-                include: {
-                    realm: true,
-                    images: true,
-                    author: true,
-                    _count: {
-                        select: {
-                            likes: true,
-                            comments: true,
-                        }
-                    }
-                },
-                orderBy: orderBy,
-                skip,
-                take: limit,
-            });
-            return posts;
-        }
-        catch(error) {
-            console.error("Error getting realms posts", error);
-            throw new Error("Error getting realms posts");
-        }
-    },
     getPost: async (id) => {
         try {
             const post = await prisma.post.findUnique({
                 where: { id },
                 include: {
-                    realm: true,
                     images: true,
                     author: true,
                     _count: {

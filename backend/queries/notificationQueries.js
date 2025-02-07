@@ -39,34 +39,6 @@ module.exports = ({
             throw new Error('Error creating user follow notification');
         }
     },
-
-    createRealmJoinNotification: async (userId, actorId, realmId) => {
-        try {
-            const notification = await prisma.notification.create({
-                data: {
-                    userId,
-                    actorId,
-                    realmId,
-                    type: 'realm_join',
-                    sourceType: "REALM",
-                },
-                include: {
-                    actor: true,
-                    realm: true,
-                }
-            });
-
-            // Emit a socket event to the user's room
-            const io = getIO(); // Get the initialized io instance
-            io.to(`notifications_${userId}`).emit('receiveNotification', notification);
-
-            return notification;
-        } catch (error) {
-            console.error('Error creating realm join notification', error);
-            throw new Error('Error creating realm join notification');
-        }
-    },
-
     createPostLikeNotification: async (userId, actorId, postId) => {
         try {
             const notification = await prisma.notification.create({
@@ -220,7 +192,6 @@ module.exports = ({
                             },
                         }
                     },
-                    realm: true,
                 },
                 skip,
                 take: limit,

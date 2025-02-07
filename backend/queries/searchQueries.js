@@ -30,19 +30,6 @@ module.exports = {
                 });
                 return users;
             }
-            else if (type === 'realms') {
-                const realms = await prisma.realm.findMany({
-                    where: { 
-                        OR: [
-                            { name: { contains: query, mode: 'insensitive' }  },
-                            { description: { contains: query, mode: 'insensitive' } }
-                        ]
-                    },
-                    skip,
-                    take: limit
-                });
-                return realms;
-            }
             else if (type === 'posts') {
                 const posts = await prisma.post.findMany({
                     where: {
@@ -71,16 +58,6 @@ module.exports = {
                     },
                     take: limit
                 });
-                const realmsPromise = prisma.realm.findMany({
-                    where: { 
-                        OR: [
-                            { name: { contains: query, mode: 'insensitive' }  },
-                            { description: { contains: query, mode: 'insensitive' } }
-                        ]
-                        
-                    },
-                    take: limit
-                });
                 const postsPromise = prisma.post.findMany({
                     where: {
                         OR: [
@@ -96,10 +73,10 @@ module.exports = {
                 });
     
                 // Wait for all promises to resolve
-                const [users, realms, posts] = await Promise.all([usersPromise, realmsPromise, postsPromise]);
+                const [users, posts] = await Promise.all([usersPromise, postsPromise]);
     
                 // Combine results
-                const combinedResults = [...users, ...realms, ...posts];
+                const combinedResults = [...users, ...posts];
     
                 // Paginate the combined results
                 const paginatedResults = combinedResults.slice(skip, skip + limit);
