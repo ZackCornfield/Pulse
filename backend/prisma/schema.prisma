@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   email     String   @unique
   username  String   @unique
@@ -53,7 +53,8 @@ model Follow {
   followingId String
   createdAt   DateTime @default(now())
 
-  @@id([followerId, followingId]) // Composite primary key to ensure uniqueness
+  id          String   @id @map("_id") @db.ObjectId
+  @@unique([followerId, followingId]) // Ensure uniqueness
 }
 
 model JoinRealm {
@@ -63,14 +64,15 @@ model JoinRealm {
   realmId   String
   createdAt DateTime @default(now())
 
-  @@id([joinerId, realmId]) // Composite primary key to ensure uniqueness
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  @@unique([joinerId, realmId]) // Ensure uniqueness
 }
 
 model Realm {
-  id                   String   @id @default(uuid())
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
-  name                 String
+  name                 String   @unique
   description          String
   realmPictureUrl      String?
   realmPicturePublicId String?
@@ -82,12 +84,10 @@ model Realm {
   joined JoinRealm[] @relation("JoinedRealm")
 
   notifications Notification[] @relation("RealmNotifications")
-
-  @@unique([name])
 }
 
 model Post {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean
@@ -108,7 +108,7 @@ model Post {
 }
 
 model Image {
-  id       String  @id @default(uuid())
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   url      String
   publicId String?
   owner    User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
@@ -118,7 +118,7 @@ model Image {
 }
 
 model Like {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   user      User     @relation("LikedBy", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
@@ -131,7 +131,7 @@ model Like {
 }
 
 model Comment {
-  id             String    @id @default(uuid())
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   comment        String
@@ -139,7 +139,7 @@ model Comment {
   userId         String
   post           Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId         String
-  parent         Comment?  @relation("NestedComments", fields: [parentId], references: [id], onDelete: Cascade)
+  parent         Comment?  @relation("NestedComments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   parentId       String?
   nestedComments Comment[] @relation("NestedComments")
 
@@ -149,7 +149,7 @@ model Comment {
 }
 
 model CommentLike {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
 
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -163,7 +163,7 @@ model CommentLike {
 }
 
 model Notification {
-  id         String                 @id @default(uuid())
+  id         String                 @id @default(auto()) @map("_id") @db.ObjectId
   userId     String
   user       User                   @relation("Notification", fields: [userId], references: [id], onDelete: Cascade)
   actorId    String
@@ -194,7 +194,7 @@ enum NotificationSourceType {
 
 // Socket
 model Message {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   senderId   String
   receiverId String
   imageUrl   String?
