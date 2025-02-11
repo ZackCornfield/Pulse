@@ -12,7 +12,7 @@ router.get('/', usersControllers.getAllUsers);
 // Get a specific metadetails for user - num published posts, num posts liked, num posts commented, num followers, num following
 router.get('/:id', usersControllers.getUser);
 
-// Get user suggested users + realms 
+// Get user suggested users
 router.get('/:id/suggest', usersControllers.getSuggested);
 
 // Get a specific user posts including num likes + (root comments including count of nested comment)
@@ -32,9 +32,6 @@ router.get('/:id/followers', usersControllers.getUserFollowers);
 
 // Get specific user following including their User details
 router.get('/:id/following', usersControllers.getUserFollowing);
-
-// Get specific user created realms
-router.get('/:id/created', isAuthorized("user"), usersControllers.getUserCreatedRealms);
 
 // Update a user
 router.put('/:id', isAuthorized("user"), [validateUserUpdate, usersControllers.updateUser]);
