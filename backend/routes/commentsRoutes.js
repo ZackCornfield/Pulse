@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const commentsControllers = require("../controllers/commentsController");
+const commentsControllers = require("../controllers/commentsControllers");
 const isAuthorized = require("../utils/middleware/isAuthorized");
 
 // Get all comments

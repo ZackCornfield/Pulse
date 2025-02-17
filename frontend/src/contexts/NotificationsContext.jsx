@@ -1,0 +1,109 @@
+import { createContext, useContext, useEffect, useState } from 'react';
+import socket from '../utils/socket';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
+const NotificationsContext = createContext();
+
+export const NotificationsProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      socket.emit('subscribeToNotifications', userId);
+    }
+
+    socket.on('receiveNotification', async (notification) => {
+      const details = populateNotificationDetails(notification);
+      // Popup notification
+      const message = `@${notification.actor.username} ${renderMessage(notification)} ${details.source && details.source}!`;  
+      toast(message, {
+        onClick: () => {
+          if (details.link) {
+            navigate(details.link);
+          }
+        },
+        autoClose: 3000, // Adjust the duration the toast is visible
+        position: "bottom-right",
+        hideProgressBar: false,
+        closeButton: true,
+        draggable: true,
+        pauseOnHover: true,
+        theme: "dark",
+      });
+
+      // Update unread count
+      setUnreadCount((prev) => prev + 1);
+    });
+    
+    return () => {
+      socket.off('receiveNotification');
+    };
+  }, [navigate]);
+
+  // Helper function to populate details with respective resources based on sourceType
+  const populateNotificationDetails = (notification) => {
+    let details = {};
+    if (notification.type === 'follow') {
+      details = { 
+        actorLink:`/profile/${notification.actorId}`, 
+        link: `/profile/${notification.actorId}`, 
+        image: notification.actor.profilePictureUrl, 
+      };
+    } 
+    else if (notification.type === 'post_like' || notification.type === 'post_comment') {
+      details = { 
+        actorLink:`/profile/${notification.actorId}`, 
+        link: `/posts/${notification.postId}`, 
+        image: notification.post.images[0]?.url || null,
+        source: notification.post.title, 
+      };
+    } 
+    else if (notification.type === 'comment_like' || notification.type === 'comment_reply') {
+      details = { 
+        actorLink:`/profile/${notification.actorId}`, 
+        link: `/posts/${notification.comment.postId}`, 
+        image: notification.comment.post.images[0]?.url || null,
+        source: notification.comment.comment, 
+      };
+    } 
+    return details;
+  };
+
+  // Helper function to render respective message based on sourceType
+  const renderMessage = (notification) => {
+    const { type } = notification;
+    switch (type) {
+      case 'follow':
+        return `started following you`;
+      case 'post_like':
+        return `liked your post`;
+      case 'post_comment':
+        return `commented on your post`;
+      case 'comment_like':
+        return `liked your comment`;
+      case 'comment_reply':
+        return `replied to your comment`;
+      default:
+        return 'You have a new notification';
+    }
+  };
+
+  return (
+    <NotificationsContext.Provider
+      value={{
+        populateNotificationDetails,
+        renderMessage,
+        unreadCount,
+        setUnreadCount
+      }}
+    >
+      {children}
+    </NotificationsContext.Provider>
+  );
+};
+
+export const useNotifications = () => useContext(NotificationsContext);
