@@ -2,8 +2,7 @@ const postsQueries = require("../queries/postsQueries");
 const likesQueries = require('../queries/likesQueries');
 const commentsQueries = require('../queries/commentsQueries');
 const usersQueries = require("../queries/usersQueries");
-const notificationQueries = require("../queries/notificationQueries");
-const { post } = require("../routes/postsRoutes");
+const notificationQueries = require("../queries/notificationsQueries");
 
 module.exports = { 
     getAllPosts: async (req, res) => {
@@ -66,6 +65,8 @@ module.exports = {
         const limit = parseInt(req.query.limit) || 10;
         const sortField = req.query.sortField || 'createdAt';
         const sortOrder = req.query.sortOrder || 'desc';
+
+        console.log("Requesting with id, page, limit, sortField, sortOrder", id, page, limit, sortField, sortOrder);
 
         try {
             const comments = await commentsQueries.getPostRootComments(id, page, limit, sortField, sortOrder);
@@ -136,8 +137,10 @@ module.exports = {
         }
     },
     createPost: async (req, res) => {
-        const { id } = req.user.id; 
+        const { id } = req.user;
         const { title, text, published, imageIds } = req.body;   
+
+        console.log("ID", id);  
 
         try {
             const newPostData = {

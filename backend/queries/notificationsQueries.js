@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const { getIO } = require('../utils/middlewares/socket');
 
 // Set database based on test or development node_env
-const databaseUrl = procces.env.DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL;
 
 const prisma = new PrismaClient({
     datasources: {

@@ -13,7 +13,7 @@ module.exports = {
 
         const {email, username, password} = req.body;
 
-        const newUser = await userQueries.createUser(email, username, password);
+        const newUser = await userQueries.addUser(email, username, password);
 
         res.status(201).json({
             message: "User created successfully", 
@@ -38,19 +38,20 @@ module.exports = {
         }   
 
         // Create JWT token
-        jwt.sign({id: user.id}, proccess.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
+        jwt.sign({id: user.id}, processs.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
             res.status(200).json({ token });
         })
     },
     demoLogInPost: async (req, res) => {
         const demoUsername = "demo";
-        const user = await userQueries.existUser(demoUsername);
+        const user = await userQueries.existUser("username", demoUsername); 
         if (!user) {
+            console.log("User not found");  
             return res.status(400).json({ message: "User not found" }); 
         }
 
         // Create JWT token
-        jwt.sign({id: user.id}, proccess.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
+        jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
             res.status(200).json({ token });
         })
     }

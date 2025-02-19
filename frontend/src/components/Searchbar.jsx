@@ -94,12 +94,12 @@ const SearchBar = () => {
             <div 
                 key={result.id} 
                 className="flex items-center p-2 hover:bg-gray-700 cursor-pointer"
-                onClick={handleNavigate(result.username ? `/profile/${result.id}` : result.name ? `/realms/${result.id}` : `/posts/${result.id}`)}
+                onClick={handleNavigate(result.username ? `/profile/${result.id}` : `/posts/${result.id}`)}
             >
                 {!result.images || result.images?.[0] != null ?
                     <img 
-                        src={result.profilePictureUrl || result.realmPictureUrl || result.images?.[0]?.url} 
-                        alt={result.username || result.name || result.title} 
+                        src={result.profilePictureUrl || result.images?.[0]?.url} 
+                        alt={result.username || result.title} 
                         className="w-12 h-12 rounded-full object-cover mr-3" 
                     />
                 :
@@ -109,9 +109,9 @@ const SearchBar = () => {
                 }
                 
                 <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm truncate">{result.username || result.name || result.title}</div>
+                    <div className="font-semibold text-sm truncate">{result.username || result.title}</div>
                     <div className="text-xs text-gray-500 truncate">
-                        {result.username ? 'User' : result.name ? 'Realm' : 'Post'}
+                        {result.username ? 'User' : 'Post'}
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@ const SearchBar = () => {
                     type="text"
                     value={query}
                     onChange={handleSearchChange}
-                    placeholder="Search for users, realms, posts..."
+                    placeholder="Search for users, posts..."
                     className="bg-transparent flex-1 outline-none px-2 text-sm"
                 />
                 <div className='text-sm'>
@@ -137,7 +137,6 @@ const SearchBar = () => {
                     >
                         <option value="all">All</option>
                         <option value="users">Users</option>
-                        <option value="realms">Realms</option>
                         <option value="posts">Posts</option>
                     </select>
                 </div>
@@ -147,7 +146,7 @@ const SearchBar = () => {
                 <div className={`absolute left-0 right-0 mt-2 bg-gray-800 border-gray-800 rounded-lg shadow-lg max-h-80 overflow-y-auto z-[99999] ${dropdownDisplay ? '' : 'hidden'}`}>
                     {loading && 
                         <div className="flex justify-center items-center h-full">
-                            <PuffLoader color="#5C6BC0" size={60} />
+                            <PuffLoader color="#424347" size={60} />
                         </div>
                     }
                     {!loading && (

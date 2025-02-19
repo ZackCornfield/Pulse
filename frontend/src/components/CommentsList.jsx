@@ -18,7 +18,7 @@ const CommentsList = ({ postId, setTotalCommentsCount }) => {
     const userId = localStorage.getItem("userId");
 
     const resetComments = useCallback(() => {
-        // Clear posts when sourceId or type changes
+        // Clear comments when sortField or sortOrder changes
         setComments([]);
         setPage(1);
         setHasMore(true);
@@ -38,7 +38,10 @@ const CommentsList = ({ postId, setTotalCommentsCount }) => {
                     setHasMore(false); // No more comments to load
                 }
 
-                setComments((prevComments) => [...prevComments, ...response.data.comments]);
+                setComments((prevComments) => {
+                    const newComments = response.data.comments.filter(comment => !prevComments.some(c => c.id === comment.id));
+                    return [...prevComments, ...newComments];
+                });
             } catch (error) {
                 console.error("Error fetching root comments:", error);
             } finally {
@@ -78,7 +81,7 @@ const CommentsList = ({ postId, setTotalCommentsCount }) => {
             const response = await api.post(`/posts/${postId}/comment`, {
                 comment: newComment,
             });
-            setComments([...comments, response.data.comment]);
+            setComments((prevComments) => [response.data.newComment, ...prevComments]);
             setNewComment("");
             setTotalCommentsCount((prevCount) => prevCount + 1);
         } catch (error) {
@@ -146,7 +149,7 @@ const CommentsList = ({ postId, setTotalCommentsCount }) => {
                             <span className="text-sm">{sortOrder === 'asc' ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown}/>} </span>
                         </button>
                     </div>
-                    {comments.length > 0 ? (
+                    {comments.length > 0 && comments ? (
                         comments.map((comment) => (
                             <Comment
                                 key={comment.id}
@@ -165,7 +168,7 @@ const CommentsList = ({ postId, setTotalCommentsCount }) => {
                     )}
                     {loading && 
                         <div className="flex justify-center items-center h-full">
-                            <PuffLoader color="#5C6BC0" size={60} />
+                            <PuffLoader color="#424347" size={60} />
                         </div>
                     }
                 </div>

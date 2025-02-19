@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 
 // Set database based on test or development node_env
-const databaseUrl = procces.env.DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL;
 
 const prisma = new PrismaClient({
     datasources: {
@@ -12,7 +12,6 @@ const prisma = new PrismaClient({
 });
 
 module.exports = {
-
     addFollow: async (followerId, followingId) => {
         try {
             const follow = await prisma.follow.create({

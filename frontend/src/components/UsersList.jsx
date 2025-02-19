@@ -37,9 +37,6 @@ const UsersList = ({ sourceId, scenario }) => {
           case 'likedComment':
             response = await api.get(`/comments/${sourceId}/liked`, { params: { page, limit } });
             break;
-          case 'joinedRealm':
-            response = await api.get(`/realms/${sourceId}/joiners`, { params: { page, limit } });
-            break;
           case 'followers':
             response = await api.get(`/users/${sourceId}/followers`, { params: { page, limit } });
             break;
@@ -109,7 +106,7 @@ const UsersList = ({ sourceId, scenario }) => {
     }
       {loading && 
         <div className="flex justify-center items-center h-full">
-          <PuffLoader color="#5C6BC0" size={60} />
+          <PuffLoader color="#424347" size={60} />
         </div>
       }
     </div>

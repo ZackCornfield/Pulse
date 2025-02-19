@@ -1,5 +1,5 @@
 const postsControllers = require("../controllers/postsControllers");
-const upload = require("../utils/middlewares/multer-config");
+const upload = require("../utils/configs/multer-config");
 
 const express = require("express");
 const router = express.Router(); 
@@ -18,7 +18,7 @@ router.get('/:id', postsControllers.getPost);
 router.get('/:id/comments', postsControllers.getPostRootComments); 
 
 // Get all users who liked a post 
-router.get('/:id/likes', postsControllers.getPostLikedUsers);    
+router.get('/:id/liked', postsControllers.getPostLikedUsers);    
 
 // Update a post 
 router.put('/:id', isAuthorized("post"), postsControllers.updatePost);

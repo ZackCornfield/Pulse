@@ -44,14 +44,14 @@ model User {
 }
 
 model Follow {
-  follower    User     @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
-  followerId  String                 @db.ObjectId
-  following   User     @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
-  followingId String                 @db.ObjectId
-  createdAt   DateTime @default(now())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  follower     User     @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId   String   @db.ObjectId
+  following    User     @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId  String   @db.ObjectId
+  createdAt    DateTime @default(now())
 
-  id          String   @id @map("_id") @db.ObjectId
-  @@unique([followerId, followingId]) // Ensure uniqueness
+  @@unique([followerId, followingId]) // Ensures uniqueness of the follower-following pair
 }
 
 model Post {

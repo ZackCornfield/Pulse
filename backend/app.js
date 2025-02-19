@@ -14,10 +14,12 @@ const authRoutes = require("./routes/authRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 const postsRoutes = require("./routes/postsRoutes");
 const commentsRoutes = require("./routes/commentsRoutes");
-const realmsRoutes = require("./routes/realmsRoutes");
 const imagesRoutes = require("./routes/imagesRoutes");
 const notificationRoutes = require('./routes/notificationsRoutes');
 const searchRoutes = require('./routes/searchRoutes');
+
+// Add Demo User
+const { existUser, addDemoUser } = require("./queries/usersQueries");
 
 // Initialize express
 const app = express();
@@ -34,14 +36,14 @@ const FRONTEND_URL =
 
 // Configure CORS
 app.use(cors({
-    origin: FRONTEND_URL, // Allow requests from this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Adjust based on your needs
-    credentials: true, // Allow credentials
-  }));
+  origin: FRONTEND_URL, // Allow requests from this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Adjust based on your needs
+  credentials: true, // Allow credentials
+}));
 
-  console.log("using frontendurl:", FRONTEND_URL);
+console.log("using frontendurl:", FRONTEND_URL);
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL);
   next();
 });
@@ -54,11 +56,11 @@ passportConfig(passport);
 
 // Debug middleware
 app.use((req, res, next) => {
-    console.log('Request Header:', req.header); // Log request body to debug
-    console.log('Request Body:', req.body); // Log request body to debug
-    console.log('Request Query:', req.query); // Log request body to debug
-    console.log('Authorization header:', req.headers.authorization);
-    next();
+  console.log('Request Header:', req.header); // Log request body to debug
+  console.log('Request Body:', req.body); // Log request body to debug
+  console.log('Request Query:', req.query); // Log request body to debug
+  console.log('Authorization header:', req.headers.authorization);
+  next();
 });
 
 // Public routes for login + signup
@@ -68,26 +70,25 @@ app.use('/auth', authRoutes);
 app.use('/users', passport.authenticate('jwt', { session: false }), usersRoutes);
 app.use('/posts', passport.authenticate('jwt', { session: false }), postsRoutes);
 app.use('/comments', passport.authenticate('jwt', { session: false }), commentsRoutes);
-app.use('/realms', passport.authenticate('jwt', { session: false }), realmsRoutes);
 app.use('/images', passport.authenticate('jwt', { session: false }), imagesRoutes);
 app.use('/notifications', passport.authenticate('jwt', { session: false }), notificationRoutes);
 app.use('/search', passport.authenticate('jwt', { session: false }), searchRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack); // Log the error stack to the console
-  
-    // Determine the status code
-    const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
-  
-    // Send JSON response with error details
-    res.status(statusCode).json({
-      success: false,
-      message: err.message || 'Internal Server Error'
-    });
-});  
+  console.error(err.stack); // Log the error stack to the console
+
+  // Determine the status code
+  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+
+  // Send JSON response with error details
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
+});
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
-    console.log("App listening on port ", port);
+  console.log("App listening on port ", port);
 })

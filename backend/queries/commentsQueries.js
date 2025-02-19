@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 
 // Set database based on test or development node_env
-const databaseUrl = procces.env.DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL;
 
 const prisma = new PrismaClient({
     datasources: {
@@ -71,21 +71,22 @@ module.exports = {
     },
     getPostRootComments: async (postId, page, limit, sortField, sortOrder) => {
         const skip = (page - 1) * limit;
+        let orderBy;
         if (sortField === 'nestedComments' || sortField === 'likes') {
             orderBy = {
                 [sortField]: { _count: sortOrder }
             };
-        } 
-        else {
+        } else {
             orderBy = {
                 [sortField]: sortOrder
             };
-        };
+        }
+
         try {
-            const comment = await prisma.comment.findMany({
+            const comments = await prisma.comment.findMany({
                 where: {
-                  postId,
-                  parentId: null,
+                    postId,
+                    parentId: null
                 },
                 include: {
                     user: true,
@@ -101,11 +102,11 @@ module.exports = {
                 skip,
                 take: limit,
             });
-            return comment;
-        }
-        catch(error) {
-            console.error("Error adding comment", error);
-            throw new Error("Error adding comment");
+
+            return comments;
+        } catch (error) {
+            console.error("Error getting post root comments", error);
+            throw new Error("Error getting post root comments");
         }
     },
     addRootComment: async (userId, postId, commentContent) => {
@@ -115,6 +116,7 @@ module.exports = {
                   comment: commentContent,
                   userId,
                   postId,
+                  parentId: null,
                 },
                 include: {
                     user: true,
@@ -204,7 +206,7 @@ module.exports = {
                 },
                 orderBy: orderBy,
                 skip,
-                take: limit,
+                take: parseInt(limit, 10),
             });
             return comments;
         }
@@ -214,6 +216,7 @@ module.exports = {
         }
     },
     addNestedComment: async (userId, postId, commentContent, parentId) => {
+        console.log("Adding nested comment with userId, postId, commentContent, parentId", userId, postId, commentContent, parentId);   
         try {
             const comment = await prisma.comment.create({
                 data: {
@@ -233,9 +236,10 @@ module.exports = {
                     }
                 }
             });
+            console.log("Comment", comment);
             return comment;
-        } 
-        catch (error) {
+        } catch (error) {
+            console.log("Error adding nested comment", error);
             console.error("Error adding nested comment", error);
             throw new Error("Error adding nested comment");
         }

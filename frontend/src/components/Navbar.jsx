@@ -33,7 +33,7 @@ const Navbar = () => {
       {/* Logo Container */}
       <div className="mt-2 text-md font-bold md:text-2xl">
         <Link to="/feed" className="transition flex justify-center items-center">
-          <span className='font-bold text-indigo-500'>flex</span>or
+          <span className='font-bold text-indigo-500'>Pulse</span>
         </Link>
       </div>
 
@@ -47,10 +47,6 @@ const Navbar = () => {
           <Link to="/feed" className="h-8 flex items-center space-x-4 hover:text-gray-400 transition">
             <FontAwesomeIcon icon={faHouse} />
             <span className="hidden md:inline">Posts</span>
-          </Link>
-          <Link to="/realms" className="h-8 flex items-center space-x-4 hover:text-gray-400 transition">
-            <FontAwesomeIcon icon={faLayerGroup} />
-            <span className="hidden md:inline">Realms</span>
           </Link>
 
           {/* Dropdown Menu for Creating Content */}
@@ -67,15 +63,6 @@ const Navbar = () => {
                 >
                   <FontAwesomeIcon icon={faMicroblog} />
                   <span>New Post</span>
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link
-                  to="/submit-realm"
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 space-x-2"
-                >
-                  <FontAwesomeIcon icon={faLayerGroup} />
-                  <span>New Realm</span>
                 </Link>
               </MenuItem>
             </MenuItems>

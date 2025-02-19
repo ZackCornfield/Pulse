@@ -11,7 +11,6 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
   const { sidebarUser: loggedUser, loading } = useUser();
-  const [suggestedRealms, setSuggestedRealms] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [suggestedLoading, setSuggestedLoading] = useState(true);
   const take = 4;
@@ -21,7 +20,6 @@ const Sidebar = () => {
       try {
         const response = await api.get(`/users/${userId}/suggest`, { params: { take } });
         setSuggestedUsers(response.data.users);
-        setSuggestedRealms(response.data.realms);
         setSuggestedLoading(false);
       } catch (error) {
         console.error('Error fetching suggested details', error);
@@ -37,16 +35,11 @@ const Sidebar = () => {
     navigate(`/profile/${id}`);
   };
 
-  const handleRealmNavigate = (e, id) => {
-    e.stopPropagation();
-    navigate(`/realms/${id}`);
-  };
-
   return (
     <nav className='hidden lg:flex bg-gray-900 text-white flex-col h-full py-6 px-4 border-l border-gray-700'>
       {loading || suggestedLoading ? (
         <div className="flex justify-center items-center h-full w-[230px]">
-          <PuffLoader color="#5C6BC0" size={60} />
+          <PuffLoader color="#424347" size={60} />
         </div>
       ) : (
         <>
@@ -108,43 +101,6 @@ const Sidebar = () => {
                 <p className="text-gray-400 text-sm">Wow! You know all of our users.</p>
               )}
             </div>
-
-            {/* Suggested Realms */}
-            <div className='mb-2'>
-              <h3 className='text-sm text-gray-300 font-semibold mb-2'>Realms</h3>
-              {suggestedRealms.length > 0 ? (
-                suggestedRealms.map((realm) => (
-                  <div 
-                    key={realm.id} 
-                    className="flex items-center justify-between p-2 mb-2 rounded-lg hover:bg-gray-800 hover:shadow-md transition-all cursor-pointer group"
-                    onClick={(e) => handleRealmNavigate(e, realm.id)}
-                  >
-                    <div className="flex items-center gap-4">
-                      <img 
-                        src={realm?.realmPictureUrl} 
-                        alt={`${realm?.name} realm`} 
-                        className="w-10 h-10 rounded-lg object-cover border-2 border-gray-600"
-                      />
-                      <div>
-                        <h4 className="text-md font-medium hover:underline truncate overflow-hidden whitespace-nowrap max-w-36">{realm?.name}</h4>
-                        <p className="text-xs text-gray-400 truncate overflow-hidden whitespace-nowrap max-w-36">
-                            {realm?.description}
-                        </p>
-                      </div>
-                    </div>
-                    <FontAwesomeIcon 
-                      icon={faArrowRight} 
-                      className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                ))
-              ) : (
-                <div>
-                    <p className="text-gray-400 text-sm">You joined all our realms!</p>
-                    <p className="text-indigo-500 text-sm cursor-pointer hover:underline" onClick={() => navigate('/submit-realm')}>Create a new one here</p>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Divider */}
@@ -152,11 +108,11 @@ const Sidebar = () => {
 
           {/* Footer */}
           <div className="text-xs text-gray-500 flex flex-col items-center space-y-2">
-            <a href="https://github.com/HarryAhnHS" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
+            <a href="https://github.com/ZackCornfield" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-white transition-colors">
               <FontAwesomeIcon icon={faGithub} className="text-lg mr-1" />
-              Developed by &nbsp;<span>@HarryAhnHS</span>
+              Developed by &nbsp;<span>@ZackCornfield</span>
             </a>
-            <span>PERN Stack Project</span>
+            <span>Pulse Project</span>
           </div>
         </>
       )}

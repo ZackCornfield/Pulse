@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const usersQueries = require('../queries/usersQueries');
 const followsQueries = require('../queries/followsQueries');
 const postsQueries = require('../queries/postsQueries');
-const notificationQueries = require('../queries/notificationQueries');
+const notificationQueries = require('../queries/notificationsQueries');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -16,6 +16,7 @@ module.exports = {
         }
     },
     getUser: async (req, res) => {  
+        const { id } = req.params; 
         try {
             const user = await usersQueries.getUser("id", id);
             res.status(200).json({
@@ -28,11 +29,10 @@ module.exports = {
     getSuggested: async (req, res) => {
         const { id } = req.params;
         const take = parseInt(req.query.take) || 4;
-        console.log("running with id and take", id, take); 
         try {
-            const suggestedUsers = await usersQueries.getSuggestedUsers(id, take);
+            const users = await usersQueries.getSuggestedUsers(id, take);
             res.status(200).json({
-                suggestedUsers
+                users
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -45,10 +45,12 @@ module.exports = {
         const sortField = req.query.sortField || "createdAt";
         const sortOrder = req.query.sortOrder || "desc";
 
+        console.log("running with id, page, limit, sortField, sortOrder", id, page, limit, sortField, sortOrder);   
+
         try {
-            const posts = postsQueries.getUserPosts(id, page, limit, sortField, sortOrder);
+            const posts = await postsQueries.getUserPosts(id, page, limit, sortField, sortOrder);
             res.status(200).json({
-                posts
+                posts,
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -62,9 +64,9 @@ module.exports = {
         const sortOrder = req.query.sortOrder || "desc";
         
         try {
-            const drafts = postsQueries.getUserDrafts(id, page, limit, sortField, sortOrder);
+            const drafts = await postsQueries.getUserDrafts(id, page, limit, sortField, sortOrder);
             res.status(200).json({
-                drafts
+                posts: drafts   
             });
         }  catch (error) {
             res.status(500).json({ error: error.message });
@@ -78,9 +80,9 @@ module.exports = {
         const sortOrder = req.query.sortOrder || "desc";
 
         try {
-            const likePosts = postsQueries.getUserLikedPosts(id, page, limit, sortField, sortOrder);    
+            const posts = await postsQueries.getUserLikedPosts(id, page, limit, sortField, sortOrder);    
             res.status(200).json({
-                likePosts
+                posts,
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -94,9 +96,9 @@ module.exports = {
         const sortOrder = req.query.sortOrder || "desc";
 
         try {
-            const commentedPosts = postsQueries.getUserCommentedPosts(id, page, limit, sortField, sortOrder);
+            const posts = await postsQueries.getUserCommentedPosts(id, page, limit, sortField, sortOrder);
             res.status(200).json({
-                commentedPosts
+                posts
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -178,7 +180,7 @@ module.exports = {
 
         try { 
             const follow = await followsQueries.addFollow(followerid, followingid);
-            res.status.json({
+            res.status(200).json({
                 message: "Successfully followed user",
                 follow 
             })
@@ -193,10 +195,10 @@ module.exports = {
         const followingid = req.params.id;
 
         try { 
-            const follow = await followsQueries.deleteFollow(followerid, followingid);
-            res.status.json({
+            const unfollow = await followsQueries.removeFollow(followerid, followingid);
+            res.status(200).json({
                 message: "Successfully unfollowed user",
-                follow 
+                unfollow 
             })
         }
         catch (error) {

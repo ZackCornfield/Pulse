@@ -1,6 +1,6 @@
 const commentLikesQueries = require("../queries/commentLikesQueries");
 const commentsQueries = require("../queries/commentsQueries");
-const notificationQueries = require("../queries/notificationQueries");
+const notificationQueries = require("../queries/notificationsQueries");
 const usersQueries = require("../queries/usersQueries");
 
 module.exports = {
@@ -80,7 +80,6 @@ module.exports = {
         const sortField = req.query.sortField || 'createdAt';
         const sortOrder = req.query.sortOrder || 'desc';
 
-
         try {
             const nestedComments = await commentsQueries.getNestedComments(id, page, limit, sortField, sortOrder);
             res.status(200).json({
@@ -93,20 +92,22 @@ module.exports = {
         }
     },
     addNestedComment: async (req, res) => {
-        const userId = req.user.id; // Assuming user is authenticated and their ID is stored in req.user
-        const parentId = req.params.id; // Get the parent comment ID from the URL
+        const userId = req.user.id; 
+        const parentId  = req.params.id; // Get the parent comment ID from the URL
         const { postId, comment } = req.body; // Get postId and comment content from the request body
-
         try {
-            const comment = await commentsQueries.addNestedComment(userId, postId, comment, parentId);
-            res.status(200).json({
+            const nestedComment = await commentsQueries.addNestedComment(userId, postId, comment, parentId);
+            res.status(201).json({
                 message: "Successfully created nested comment",
-                comment
-            });
-        } catch (error) {
+                comment: nestedComment
+            })
+            // Create Notification
+            notificationQueries.createCommentReplyNotification(nestedComment.parent.userId, userId, parentId);
+        }
+        catch(error) {
             res.status(500).json({
-                error: error.message
-            });
+                message: error.message
+            })
         }
     },
     getNestedCommentsCount: async (req, res) => {

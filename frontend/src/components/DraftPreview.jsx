@@ -86,28 +86,6 @@ const DraftPreview = ({ post, postId, posts, setPosts }) => {
                             <p className="text-xs sm:text-sm text-gray-400">
                                 {post?.createdAt && formatTime(post?.createdAt)}
                             </p>
-                            {post?.realm &&
-                                <div className="flex items-center ml-2">
-                                    <img 
-                                        src={post?.realm?.realmPictureUrl} 
-                                        alt={`${post?.realm?.name} realm picture`} 
-                                        className="w-6 h-6 rounded-lg object-cover cursor-pointer"
-                                        onClick={(e) => { 
-                                            e.stopPropagation(); 
-                                            navigate(`/realms/${post?.realmId}`);
-                                        }} 
-                                    />
-                                    <span 
-                                        className="ml-1 text-xs sm:text-sm font-semibold cursor-pointer hover:underline"
-                                        onClick={(e) => { 
-                                            e.stopPropagation(); 
-                                            navigate(`/realms/${post?.realmId}`);
-                                        }}
-                                    >
-                                        {post?.realm?.name}
-                                    </span>
-                                </div>
-                            }
                         </div>
                     </div>
                 </div>

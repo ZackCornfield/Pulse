@@ -242,7 +242,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
             {isRoot && loading
             ? 
                 <div className="flex justify-center items-center h-full">
-                    <PuffLoader color="#5C6BC0" size={60} />
+                    <PuffLoader color="#424347" size={60} />
                 </div>
             :
             <>
@@ -435,7 +435,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
                         {/* Loading Indicator */}
                         {nestedLoading && (
                             <div className="flex justify-center items-center h-full">
-                                <PuffLoader color="#5C6BC0" size={60} />
+                                <PuffLoader color="#424347" size={60} />
                             </div>
                         )}
                     </div>

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "migrate": "npx prisma migrate deploy",
-    "dev": "NODE_ENV=development && node app.js",
+    "dev": "NODE_ENV=development && node --watch app.js",
     "test": "NODE_ENV=test && jest",
     "postinstall": "npx prisma generate"
   },

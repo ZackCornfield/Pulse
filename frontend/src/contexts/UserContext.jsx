@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
         setSidebarUser(response.data.user);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        console.error(response.data.user);
       } finally {
         setLoading(false);
       }

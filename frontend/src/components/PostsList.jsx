@@ -66,21 +66,23 @@ const PostsList = ({ sourceId, type }) => {
               params: { page, limit, sortField, sortOrder }
             });
             break;
-          case 'realm_posts':
-            response = await api.get(`/realms/${sourceId}/posts`, {
-              params: { page, limit, sortField, sortOrder }
-            });
-            break;
           default:
             response = { data: { posts: [] } };
             break;
         }
+        
+        if (Array.isArray(response.data.posts)) {
+          if (response.data.posts.length < limit) {
+            setHasMore(false);
+          }
 
-        if (response.data.posts.length < limit) {
-          setHasMore(false);
+          setPosts(prevPosts => {
+            const newPosts = response.data.posts.filter(post => !prevPosts.some(p => p.id === post.id));
+            return [...prevPosts, ...newPosts];
+          });
+        } else {
+          console.error('No posts array in response data or posts is not an array');
         }
-
-        setPosts(prevPosts => [...prevPosts, ...response.data.posts]);
       } catch (error) {
         console.error('Error fetching posts data', error);
       } finally {
@@ -123,7 +125,6 @@ const PostsList = ({ sourceId, type }) => {
   const handleSortChange = (e) => {
     setSortField(e.target.value);
     setPage(1); // Reset the page number when sort field changes
-
   };
 
   const toggleSortOrder = () => {
@@ -199,7 +200,7 @@ const PostsList = ({ sourceId, type }) => {
 
         {loading && 
           <div className="flex justify-center items-center h-full">
-            <PuffLoader color="#5C6BC0" size={60} />
+            <PuffLoader color="#424347" size={60} />
           </div>
         }
     </>

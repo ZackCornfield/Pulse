@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require('bcryptjs');
 
 // Set database based on test or development node_env
-const databaseUrl = procces.env.DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL;
 
 const prisma = new PrismaClient({
     datasources: {
@@ -203,6 +203,32 @@ module.exports = {
             throw new Error('Error adding user');
         }
     },
+    addDemoUser: async() => {
+        try {
+            const hashedPassword = await new Promise((resolve, reject) => {
+                bcrypt.hash(process.env.DEMO_USER_PASSWORD, 10, (err, hashedPassword) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(hashedPassword);
+                });
+            });
+            const user = await prisma.user.create({
+                data: {
+                    email: process.env.DEMO_USER_EMAIL,
+                    username: process.env.DEMO_USER_USERNAME,
+                    password: hashedPassword,
+                    profilePictureUrl: process.env.DEFAULT_PROFILE_PICTURE_URL,
+                    profilePicturePublicId: process.env.DEFAULT_PROFILE_PICTURE_PUBLIC_ID
+                }
+            })
+            return user;
+        }
+        catch(error) {
+            console.error('Error adding demo user', error);
+            throw new Error('Error adding demo user');
+        }
+    },
     updateUser: async (id, username, bio) => {
         console.log("Updating user query");
         try {
@@ -247,6 +273,15 @@ module.exports = {
             throw new Error("Error deleting user");
         }
     },
+    deleteAllUsers: async () => {
+        try {
+            await prisma.user.deleteMany({});
+        }
+        catch(error) {
+            console.error("Error deleting all users", error);
+            throw new Error("Error deleting all users");
+        }
+    },  
     getUserFollowers: async (id, page, limit) => {
         try {
             const user = await prisma.user.findUnique({

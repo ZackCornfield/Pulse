@@ -181,7 +181,7 @@ const NotificationsList = () => {
       )}
       {loading && (
         <div className="flex justify-center items-center h-full">
-          <PuffLoader color="#5C6BC0" size={60} />
+          <PuffLoader color="#424347" size={60} />
         </div>
       )}
     </div>
