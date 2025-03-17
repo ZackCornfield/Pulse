@@ -120,7 +120,7 @@ const SearchBar = () => {
 
     return (
         <div className='w-full relative' ref={dropdownRef}>
-            <div className={`flex items-center bg-gray-800 rounded-lg transition-all duration-300 p-3 overflow-hidden`}>
+            <div className={`flex items-center bg-zinc-700 rounded-lg transition-all duration-300 p-3 overflow-hidden`}>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="text-gray-400"/>
                 <input
                     type="text"
@@ -133,7 +133,7 @@ const SearchBar = () => {
                     <select
                         value={searchType}
                         onChange={handleSearchTypeChange}
-                        className="bg-transparent text-sm pl-2 border-l border-gray-500"
+                        className="bg-zinc-800 text-sm pl-2"
                     >
                         <option value="all">All</option>
                         <option value="users">Users</option>
@@ -143,7 +143,7 @@ const SearchBar = () => {
                 
             </div>
             {query.length > 1 && (
-                <div className={`absolute left-0 right-0 mt-2 bg-gray-800 border-gray-800 rounded-lg shadow-lg max-h-80 overflow-y-auto z-[99999] ${dropdownDisplay ? '' : 'hidden'}`}>
+                <div className={`absolute left-0 right-0 mt-2 bg-zinc-800 border-gray-800 rounded-lg shadow-lg max-h-80 overflow-y-auto z-[99999] ${dropdownDisplay ? '' : 'hidden'}`}>
                     {loading && 
                         <div className="flex justify-center items-center h-full">
                             <PuffLoader color="#424347" size={60} />

@@ -112,10 +112,10 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div
         ref={modalRef}
-        className="bg-gray-800 text-white rounded-lg shadow-lg max-w-lg w-full p-6"
+        className="bg-zinc-700 text-white rounded-lg shadow-lg max-w-lg w-full p-6"
       >
         <h2 className="text-2xl mb-4">Update Your Profile</h2>
-        <div className='border-t border-gray-700 my-6'></div>
+        <div className='border-t border-zinc-700 my-6'></div>
         <form onSubmit={handleFormSubmit}>
           {loading ? (
             <div className="flex justify-center items-center h-full">
@@ -137,7 +137,7 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
                     <img
                       src={imagePreview}
                       alt="Profile"
-                      className="w-32 h-32 rounded-full object-cover border-2 border-gray-700"
+                      className="w-32 h-32 rounded-full object-cover border-2 border-zinc-700"
                     />
                   )}
                   <div className="w-32 h-32 absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl rounded-full opacity-0 hover:opacity-100 transition-opacity">
@@ -155,7 +155,7 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
                   value={formData.username}
                   onChange={handleChange}
                   disabled={isDemoUser} // Disable the input if user is "demo"
-                  className={`w-full p-2 rounded bg-gray-800 border-2 ${
+                  className={`w-full p-2 rounded bg-zinc-800 border-2 ${
                     usernameError ? 'border-red-500' : 'border-gray-700'
                   } text-white ${isDemoUser ? 'cursor-not-allowed opacity-50' : ''}`} // Adjust styles when disabled
                 />
@@ -169,7 +169,7 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
                   rows="4"
                   value={formData.bio}
                   onChange={handleChange}
-                  className="w-full p-2 rounded bg-gray-800 border-2 border-gray-700 text-white"
+                  className="w-full p-2 rounded bg-zinc-800 border-2 border-gray-700 text-white"
                 ></textarea>
               </div>
             </>
@@ -178,14 +178,14 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
         <div className="flex justify-end mt-4">
           <button
             onClick={handleModalClose}
-            className="mr-2 px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white"
+            className="mr-2 px-4 py-2 rounded bg-zinc-600 hover:bg-zinc-800 text-white"
           >
             Cancel
           </button>
           <button
             type="submit"
             onClick={handleFormSubmit}
-            className="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white"
+            className="px-4 py-2 rounded bg-teal-600 hover:bg-teal-500 text-white"
           >
             Save changes
           </button>

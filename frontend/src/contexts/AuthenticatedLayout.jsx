@@ -11,10 +11,10 @@ const AuthenticatedLayout = () => {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <Navbar className="bg-gray-900 text-white flex-shrink-0 h-full" />
+      <Navbar className="bg-zinc-800 text-white flex-shrink-0 h-full" />
 
       {/* Main content area */}
-      <div className="flex-1 flex flex-col bg-gray-900 text-white transition-all duration-300">
+      <div className="flex-1 flex flex-col bg-zinc-800 text-white transition-all duration-300">
         {/* Search Bar */}
         <div className='my-4 mx-6 text-white'>
           <SearchBar className="flex-1"/>
@@ -23,7 +23,7 @@ const AuthenticatedLayout = () => {
         {/* Scrollable Content */}
         <div 
           ref={scrollableRef}
-          className='bg-gray-900 flex-1 rounded-lg overflow-y-auto'>
+          className='bg-zinc-800 flex-1 rounded-lg overflow-y-auto'>
           <Outlet context={{scrollableRef}}/>
         </div>
       </div>

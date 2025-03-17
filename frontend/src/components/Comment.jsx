@@ -254,7 +254,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
                             alt="Profile"
                         />
                         <div>
-                            <div className="text-base font-semibold text-blue-400 hover:underline">@{comment.user?.username}</div>
+                            <div className="text-base font-semibold text-white hover:text-teal-400 hover:underline">@{comment.user?.username}</div>
                             <div className="text-sm text-gray-400 flex-1">
                                 {comment?.createdAt && formatTime(comment?.createdAt)}
                             </div>
@@ -361,7 +361,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
                     <div className="flex items-center justify-between">
                         <button
                             onClick={handleReplyClick}
-                            className="text-blue-400 text-sm mt-2 space-x-2 hover:underline"
+                            className="text-teal-400 text-sm mt-2 space-x-2 hover:underline"
                         >
                             <FontAwesomeIcon icon={faReply} className="text-xs"/>
                             <span>Reply</span>
@@ -370,7 +370,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
                         {comment._count?.nestedComments > 0 && (
                             <button
                                 onClick={handleShowRepliesClick}
-                                className="text-blue-400 text-sm mt-2 hover:underline"
+                                className="text-teal-400 text-sm mt-2 hover:underline"
                             >
                                 {showNestedComments
                                     ? `Hide replies`
@@ -426,7 +426,7 @@ const Comment = ({ comment, commentId, setTotalCommentsCount, siblings, setSibli
                         {hasMore && !nestedLoading && (
                             <button
                                 onClick={handleLoadMoreNestedComments}
-                                className="text-blue-400 text-sm mt-4 hover:underline"
+                                className="text-teal-400 text-sm mt-4 hover:underline"
                             >
                                 Load more replies
                             </button>

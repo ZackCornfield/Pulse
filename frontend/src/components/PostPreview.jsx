@@ -121,7 +121,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
     return (
         <div 
             key={post?.id} 
-            className="post-item mb-6 bg-gray-800 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer relative" 
+            className="post-item mb-6 bg-zinc-700 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer relative" 
             onClick={(e) => redirectToPost(e)}
         >
             {loading 
@@ -145,7 +145,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
                         />
                         <div>
                             <h3 
-                                className="text-sm sm:text-lg font-semibold text-blue-400 cursor-pointer hover:underline"
+                                className="text-sm sm:text-lg font-semibold text-white cursor-pointer hover:text-teal-400 hover:underline"
                                 onClick={(e) => { 
                                     e.stopPropagation(); 
                                     navigate(`/profile/${post?.authorId}`); 
@@ -167,7 +167,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
                                 <FontAwesomeIcon icon={faEllipsis} className="hover:text-gray-300"/>
                             </MenuButton>
                             <MenuItems 
-                                className="absolute right-0 mt-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-md w-40"
+                                className="absolute right-0 mt-2 bg-zinc-800 text-gray-200 border border-gray-600 rounded-md w-40"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 {isEditable && (
@@ -175,7 +175,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
                                         <MenuItem>
                                                 <button
                                                     onClick={handleEditClick}
-                                                    className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-gray-600'
+                                                    className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-zinc-600'
                                                 >
                                                     <FontAwesomeIcon icon={faPenToSquare} />
                                                     <span>Edit</span>
@@ -184,7 +184,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
                                         <MenuItem>
                                                 <button
                                                     onClick={handleDeleteClick}
-                                                    className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-gray-600'
+                                                    className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-zinc-600'
                                                 >
                                                     <FontAwesomeIcon icon={faTrashCan} />
                                                     <span>Delete</span>
@@ -195,7 +195,7 @@ const PostPreview = ({ post, postId, isEditable, posts, setPosts }) => {
                                 <MenuItem>
                                     <button
                                         onClick={() => navigate(`/posts/${postId}/liked`)}
-                                        className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-gray-600'
+                                        className='pl-6 text-left space-x-3 w-full py-2 text-sm hover:bg-zinc-600'
                                     >
                                         <FontAwesomeIcon icon={faHeartFilled} />
                                         <span>Liked Users</span>

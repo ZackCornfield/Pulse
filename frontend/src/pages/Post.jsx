@@ -116,10 +116,10 @@ const PostPage = () => {
           <div className="flex justify-center items-center h-full">
               <PuffLoader color="#424347" size={60} />
           </div>
-    )}
+    )}  
 
     return (
-        <div className="container mx-auto p-6 bg-gray-900 text-gray-100 min-h-screen">
+        <div className="container mx-auto p-6 bg-zinc-800 text-gray-100 min-h-screen">
             {post && (
                 <div className="post-item rounded-lg mb-6 relative">
                     {/* Author Section */}
@@ -133,7 +133,7 @@ const PostPage = () => {
                             />
                             <div>
                                 <h3 
-                                    className="text-lg font-semibold text-blue-400 cursor-pointer hover:underline"
+                                    className="text-lg font-semibold text-white cursor-pointer hover:text-teal-400 hover:underline"
                                     onClick={(e) => redirectToProfile(e, post?.authorId)}
                                 >
                                     @{post?.author?.username}

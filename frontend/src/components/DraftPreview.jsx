@@ -51,7 +51,7 @@ const DraftPreview = ({ post, postId, posts, setPosts }) => {
     return (
         <div 
             key={post?.id} 
-            className="relative mb-6 bg-gray-800 text-white px-6 pb-6 rounded-lg shadow-md transition-shadow duration-300 cursor-pointer group"
+            className="relative mb-6 bg-zinc-800 text-white px-6 pb-6 rounded-lg shadow-md transition-shadow duration-300 cursor-pointer group"
             onClick={handleEditClick}
         >
             {/* Draft Badge */}

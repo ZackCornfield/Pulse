@@ -78,7 +78,7 @@ const UserPreview = ({ user, userId, setUsers }) => {
       :
       <>
         <div 
-          className="user-preview flex items-center justify-between space-x-4 p-4 bg-gray-800 rounded-lg"
+          className="user-preview flex items-center justify-between space-x-4 p-4 bg-zinc-800 rounded-lg"
         >
           <div 
             className="user-info flex items-center gap-3"
@@ -111,7 +111,7 @@ const UserPreview = ({ user, userId, setUsers }) => {
 
         {/* Hover Card with Additional User Details */}
         {hovered && (
-          <div className="absolute z-10 p-4 bg-gray-900 border border-gray-700 rounded-lg shadow-lg mt-2 w-64">
+          <div className="absolute z-10 p-4 bg-zinc-800 border border-gray-700 rounded-lg shadow-lg mt-2 w-64">
             <div className="flex items-center space-x-4">
               <img 
                 src={user?.profilePictureUrl} 

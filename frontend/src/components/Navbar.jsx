@@ -29,11 +29,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='bg-gray-900 text-white flex flex-col h-full py-4 px-2 md:px-6 transition-all duration-300 border-r border-gray-700'>
+    <nav className='bg-zinc-800 text-white flex flex-col h-full py-4 px-2 md:px-6 transition-all duration-300 border-r border-gray-700'>
       {/* Logo Container */}
       <div className="mt-2 text-md font-bold md:text-2xl">
         <Link to="/feed" className="transition flex justify-center items-center">
-          <span className='font-bold text-indigo-500'>Pulse</span>
+          <span className='font-bold text-teal-500'>Pulse</span>
         </Link>
       </div>
 
@@ -55,11 +55,11 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faSquarePlus} />
               <span className="hidden md:inline">Create</span>
             </MenuButton>
-            <MenuItems className="absolute left-0 mt-2 w-40 bg-gray-800 rounded shadow-lg py-2 border border-gray-700 z-50">
+            <MenuItems className="absolute left-0 mt-2 w-40 bg-zinc-800 rounded shadow-lg py-2 border border-gray-700 z-50">
               <MenuItem>
                 <Link
                   to="/submit-post"
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 space-x-2"
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-zinc-700 space-x-2"
                 >
                   <FontAwesomeIcon icon={faMicroblog} />
                   <span>New Post</span>

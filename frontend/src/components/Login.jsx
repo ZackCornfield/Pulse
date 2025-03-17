@@ -78,7 +78,7 @@ const Login = () => {
             type="text"
             value={formData.username}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-3 bg-zinc-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-300"
             placeholder="Enter your username"
             required
           />
@@ -92,7 +92,7 @@ const Login = () => {
             type="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full p-3 bg-zinc-800 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-300"
             placeholder="Enter your password"
             required
           />
@@ -100,7 +100,7 @@ const Login = () => {
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>} {/* Display error message if exists */}
         <button
           type="submit"
-          className="w-full p-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+          className="w-full p-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors duration-300"
         >
           Login
         </button>
@@ -108,7 +108,7 @@ const Login = () => {
         <button
           type="button"
           onClick={handleDemoLogin}
-          className="w-full p-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300 mt-4"
+          className="w-full p-3 bg-zinc-800 text-white font-semibold rounded-lg hover:bg-zinc-900 transition-colors duration-300 mt-4"
         >
           Try Demo
         </button>
