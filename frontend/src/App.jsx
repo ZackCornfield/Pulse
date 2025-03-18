@@ -40,7 +40,7 @@ const App = () => {
     <Router>
       <Routes>
         {/* Routes for unauthenticated users */}
-        <Route path="/" element={isAuthenticated ? <Navigate to="/feed" /> : <UnauthenticatedPage />} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/posts/feed" /> : <UnauthenticatedPage />} />
 
         {/* Protected routes */}
         {isAuthenticated ? (
@@ -56,7 +56,7 @@ const App = () => {
               <Route path="/profile/:userId" element={<ProfilePage />} />
               <Route path="/submit-post/:postId?" element={<PostForm />} />
               <Route path="/posts/:postId" element={<Post />} />
-              <Route path="/feed" element={<Feed />} />
+              <Route path="/posts/feed" element={<Feed />} />
               <Route path="/notifications" element={<Notifications />} />
 
               {/* User list routes */}
