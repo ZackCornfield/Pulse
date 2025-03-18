@@ -40,7 +40,16 @@ const App = () => {
     <Router>
       <Routes>
         {/* Routes for unauthenticated users */}
-        <Route path="/" element={isAuthenticated ? <Navigate to="/posts/feed" /> : <UnauthenticatedPage />} />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/posts/feed" />
+            ) : (
+              <UnauthenticatedPage onLogin={() => setIsAuthenticated(true)} />
+            )
+          }
+        />
 
         {/* Protected routes */}
         {isAuthenticated ? (

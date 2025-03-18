@@ -3,7 +3,7 @@ import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -36,6 +36,8 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
+
+        onLogin(); // Notify parent component of login
         navigate('/posts/feed'); // Use React Router for navigation
       }
     } catch (error) {

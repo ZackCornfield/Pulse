@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Login from '../components/Login';
 import SignUp from '../components/SignUp';
 
-const UnauthenticatedPage = () => {
+const UnauthenticatedPage = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   const toggleForm = () => {
@@ -24,7 +24,7 @@ const UnauthenticatedPage = () => {
           {/* Conditional Form Rendering */}
           {isLogin ? (
             <>
-              <Login />
+              <Login onLogin={onLogin} />
               <div className='mx-6 border-t border-zinc-700'></div>
               <button
                 onClick={toggleForm}
