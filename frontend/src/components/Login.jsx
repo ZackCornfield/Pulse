@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState(''); // State to hold the error message
+  const navigate = useNavigate(); // Initialize React Router's navigate function
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -34,7 +36,7 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
-        window.location.href = "/posts/feed"; // Redirect to home page
+        navigate('/posts/feed'); // Use React Router for navigation
       }
     } catch (error) {
       console.error('Login failed', error);
@@ -57,7 +59,7 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
-        window.location.href = "/posts/feed";
+        navigate('/posts/feed'); // Use React Router for navigation
       }
     } catch (error) {
       console.error('Demo login failed', error);
