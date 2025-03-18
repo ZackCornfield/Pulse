@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const http = require('http');
-
+const path = require('path');
 const passport = require('passport');
 const express = require("express");
 const cors = require("cors");
@@ -74,6 +74,15 @@ app.use('/images', passport.authenticate('jwt', { session: false }), imagesRoute
 app.use('/notifications', passport.authenticate('jwt', { session: false }), notificationRoutes);
 app.use('/search', passport.authenticate('jwt', { session: false }), searchRoutes);
 
+// Serve static files from the React app
+const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+app.use(express.static(buildPath));
+
+// Catch-all handler to serve React's index.html for unknown routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack); // Log the error stack to the console
@@ -91,4 +100,4 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log("App listening on port ", port);
-})
+});
