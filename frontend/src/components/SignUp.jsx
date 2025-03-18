@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode'; // Fix import
+import { jwtDecode } from 'jwt-decode'; // Fix import
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = ({ onLogin }) => {
