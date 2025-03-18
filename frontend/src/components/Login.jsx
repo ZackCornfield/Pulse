@@ -34,7 +34,7 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
-        window.location.href = '/feed'; // Redirect to home page
+        window.location.href = '/posts/feed'; // Redirect to home page
       }
     } catch (error) {
       console.error('Login failed', error);
