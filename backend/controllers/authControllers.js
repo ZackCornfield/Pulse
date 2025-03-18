@@ -27,11 +27,13 @@ module.exports = {
     logInPost: async (req, res) => {
         const {username, password} = req.body;  
 
-        const user = await userQueries.existUser(username);
+        const user = await userQueries.existUser("username", username);
         if (!user) {
             return res.status(400).json({ message: "User not found" }); 
         }
 
+        console.log(password);
+        console.log(user.password); 
         const match = await bcrypt.compare(password, user.password);
         if(!match) {
             return res.status(400).json({ message: "Incorrect password" });
