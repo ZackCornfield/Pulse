@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-import  { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode'; // Fix import
+import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -10,6 +11,7 @@ const SignUp = () => {
     confirmPassword: '',
   });
   const [error, setError] = useState(null); // State to hold the error message
+  const navigate = useNavigate(); // Initialize React Router's navigate function
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -61,7 +63,9 @@ const SignUp = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
-        window.location.href = '/posts/feed'; // Redirect to home page
+
+        onLogin(); // Notify parent component of login
+        navigate('/posts/feed'); // Redirect to feed page
       }
     } catch (error) {
       console.error('Login failed', error);

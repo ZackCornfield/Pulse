@@ -61,6 +61,8 @@ const Login = ({ onLogin }) => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
+
+        onLogin(); // Notify parent component of login
         navigate('/posts/feed'); // Use React Router for navigation
       }
     } catch (error) {

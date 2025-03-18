@@ -35,7 +35,7 @@ const UnauthenticatedPage = ({ onLogin }) => {
             </>
           ) : (
             <>
-              <SignUp />
+              <SignUp onLogin={onLogin} />
               <div className='mx-6 border-t border-zinc-700'></div>
               <button
                 onClick={toggleForm}
