@@ -75,7 +75,7 @@ app.use('/notifications', passport.authenticate('jwt', { session: false }), noti
 app.use('/search', passport.authenticate('jwt', { session: false }), searchRoutes);
 
 // Serve static files from the React app
-const buildPath = path.join(__dirname, '..', 'frontend', 'build');
+const buildPath = path.join(__dirname, '..', 'frontend', 'dist');
 app.use(express.static(buildPath));
 
 // Catch-all handler to serve React's index.html for unknown routes
