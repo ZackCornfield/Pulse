@@ -32,7 +32,7 @@ const Navbar = () => {
     <nav className='bg-zinc-800 text-white flex flex-col h-full py-4 px-2 md:px-6 transition-all duration-300 border-r border-gray-700'>
       {/* Logo Container */}
       <div className="mt-2 text-md font-bold md:text-2xl">
-        <Link to="/feed" className="transition flex justify-center items-center">
+        <Link to="/posts/feed" className="transition flex justify-center items-center">
           <span className='font-bold text-teal-500'>Pulse</span>
         </Link>
       </div>
@@ -44,7 +44,7 @@ const Navbar = () => {
       <div className="flex flex-col items-center md:items-start flex-grow">
         {/* Menu Items */}
         <div className="flex flex-col space-y-6">
-          <Link to="/feed" className="h-8 flex items-center space-x-4 hover:text-gray-400 transition">
+          <Link to="/posts/feed" className="h-8 flex items-center space-x-4 hover:text-gray-400 transition">
             <FontAwesomeIcon icon={faHouse} />
             <span className="hidden md:inline">Posts</span>
           </Link>

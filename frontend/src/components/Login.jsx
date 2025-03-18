@@ -57,7 +57,7 @@ const Login = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.id;
         localStorage.setItem('userId', userId);
-        window.location.href = '/feed';
+        window.location.href = '/posts/feed';
       }
     } catch (error) {
       console.error('Demo login failed', error);
