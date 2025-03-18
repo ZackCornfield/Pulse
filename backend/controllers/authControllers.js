@@ -40,7 +40,7 @@ module.exports = {
         }   
 
         // Create JWT token
-        jwt.sign({id: user.id}, processs.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
+        jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '24h'}, (err, token) => {
             res.status(200).json({ token });
         })
     },
