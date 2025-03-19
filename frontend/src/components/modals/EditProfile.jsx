@@ -79,7 +79,7 @@ const EditProfileModal = ({ open, handleModalClose, user, userId, setProfileMeta
     try {
       if (profilePictureFile) {
         const pictureData = new FormData();
-        pictureData.append('profilePicture', profilePictureFile);
+        pictureData.append('image', profilePictureFile);
         await api.put('/images/profile-picture', pictureData, {
           headers: {
             'Content-Type': 'multipart/form-data',

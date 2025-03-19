@@ -141,7 +141,7 @@ const PostForm = () => {
             uploadData.append('image', image.file);
             uploadData.append('id', image.id);
 
-            await api.post(`/images/`, uploadData, {
+            await api.post(`/images`, uploadData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

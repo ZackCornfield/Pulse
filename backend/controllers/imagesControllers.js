@@ -15,7 +15,7 @@ module.exports = {
                 resource_type: "auto",
             });
 
-            console.log(result);
+            console.log("Result: " + result);
 
             imageData = ({
                 id,
@@ -101,12 +101,12 @@ module.exports = {
             const currentId = await usersQueries.getUserProfilePicturePublicId(userId);
 
             // Upload to cloudinary 
-            const result = await cloudinary.uploadr.upload(image.path, {
+            const result = await cloudinary.uploader.upload(image.path, {
                 resource_type: "auto",
             });
 
             // Update user profile picture
-            await usersQueries.getUserProfilePicturePublicId(userId, result.secure_url, result.public_id);
+            await usersQueries.updateUserProfilePicture(userId, result.secure_url, result.public_id);
 
             // Delete old image if exists and is not default
             if (currentId !== process.env.DEFAULT_PROFILE_PICTURE_PUBLIC_ID){

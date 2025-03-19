@@ -73,7 +73,7 @@ model Post {
 }
 
 model Image {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(uuid()) @map("_id") 
   url      String
   publicId String?
   owner    User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
